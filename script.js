@@ -44,6 +44,38 @@ const bird = {
 };
 
 
+const pipes = {
+    position: [], width: 50, gap: 150, dx: 3,
+    draw: function() {
+        ctx.fillStyle = '#ff0055';
+        for (let i = 0; i < this.position.length; i++) {
+            let p = this.position[i];
+            ctx.fillRect(p.x, 0, this.width, p.y);
+            ctx.fillRect(p.x, p.y + this.gap, this.width, canvas.height - (p.y + this.gap));
+        }
+    },
+    update: function() {
+        if (frames % 120 === 0) {
+            let maxY = canvas.height - this.gap - 50;
+            let randomY = Math.floor(Math.random() * (maxY - 50) + 50);
+            this.position.push({ x: canvas.width, y: randomY, passed: false });
+        }
+        for (let i = 0; i < this.position.length; i++) {
+            let p = this.position[i];
+            p.x -= (this.dx * (gameSpeed / 3)); 
+            if (p.x + this.width <= 0) { this.position.shift(); i--; continue; }
+            
+            if (bird.x + bird.width > p.x && bird.x < p.x + this.width) {
+                if (bird.y < p.y || bird.y + bird.height > p.y + this.gap) gameOver();
+            }
+            if (p.x + this.width < bird.x && !p.passed) {
+                score++; p.passed = true; scoreBoard.innerText = score;
+                if (score > 0 && score % 10 === 0) activateSlowMotion();
+            }
+        }
+    }
+};
+
 
 function loop() {
     if (!isPlaying) return;
@@ -55,4 +87,5 @@ function loop() {
 window.addEventListener('keydown', function(e) { if (e.code === 'Space') { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); } });
 canvas.addEventListener('click', function() { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); });
 restartBtn.addEventListener('click', resetGame);
+
 
