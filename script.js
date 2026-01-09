@@ -94,7 +94,9 @@ const powerUp = {
         this.x -= (3 * (gameSpeed / 3)); 
         if (bird.x < this.x + this.width && bird.x + bird.width > this.x && bird.y < this.y + this.height && bird.y + bird.height > this.y) {
             toggleGravityInvert();
+            score += 5; 
             scoreBoard.innerText = score;
+            showFloatingText("+5", this.x, this.y);
             if (score > 0 && score % 10 === 0) activateSlowMotion();
             this.active = false; this.x = -100;
         }
@@ -103,6 +105,32 @@ const powerUp = {
 };
 
 
+function showFloatingText(text, x, y) {
+    const el = document.createElement('div');
+    el.innerText = text; el.style.position = 'absolute'; el.style.left = x + 'px'; el.style.top = y + 'px';
+    el.style.color = '#fff'; el.style.fontSize = '24px'; el.style.fontWeight = 'bold'; el.style.pointerEvents = 'none';
+    el.style.transition = 'all 1s ease-out'; el.style.zIndex = '100';
+    document.querySelector('.game-container').appendChild(el);
+    requestAnimationFrame(() => { el.style.transform = 'translateY(-50px)'; el.style.opacity = '0'; });
+    setTimeout(() => el.remove(), 1000);
+}
+
+
+function toggleGravityInvert() {
+    isGravityInverted = !isGravityInverted; bird.velocity = 0;
+    if(isGravityInverted) { statusIndicator.classList.remove('hidden'); bird.color = '#f0f'; } 
+    else { statusIndicator.classList.add('hidden'); bird.color = '#0ff'; }
+}
+
+function resetGame() {
+    bird.y = 150; bird.velocity = 0; pipes.position = []; score = 0; frames = 0; gameSpeed = 3;
+    isGravityInverted = false; bird.color = '#0ff'; statusIndicator.classList.add('hidden'); scoreBoard.innerText = score;
+    isGameOver = false; isPlaying = true;
+    startScreen.classList.add('hidden'); gameOverScreen.classList.add('hidden');
+    loop();
+}
+
+function gameOver() { isGameOver = true; isPlaying = false; finalScoreEl.innerText = score; gameOverScreen.classList.remove('hidden'); }
 
 function loop() {
     if (!isPlaying) return;
@@ -114,6 +142,7 @@ function loop() {
 window.addEventListener('keydown', function(e) { if (e.code === 'Space') { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); } });
 canvas.addEventListener('click', function() { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); });
 restartBtn.addEventListener('click', resetGame);
+
 
 
 
