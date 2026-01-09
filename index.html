@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Quantum Flap: The Glitch</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <canvas id="gameCanvas"></canvas>
+      <div id="startScreen" class="ui-layer">
+        <h1>QUANTUM FLAP</h1>
+        <p>The Glitch</p>
+        <p class="instruction">按 [空白鍵] 或 [點擊] 開始</p>
+      </div>
+      <div id="gameOverScreen" class="ui-layer hidden">
+        <h2>SYSTEM FAILURE</h2>
+        <p>Score: <span id="finalScore">0</span></p>
+        <button id="restartBtn">REBOOT SYSTEM</button>
+      </div>
+      <div id="scoreBoard">0</div>
+      <div id="statusIndicator" class="hidden">GRAVITY INVERTED!</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
