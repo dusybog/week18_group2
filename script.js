@@ -77,6 +77,33 @@ const pipes = {
 };
 
 
+const powerUp = {
+    x: -100, y: 0, width: 20, height: 20, active: false,
+    spawn: function() {
+        if (!this.active && Math.random() < 0.005) {
+            this.active = true; this.x = canvas.width; this.y = Math.random() * (canvas.height - 100) + 50;
+        }
+    },
+    draw: function() {
+        if (!this.active) return;
+        ctx.fillStyle = '#a020f0'; ctx.beginPath(); ctx.arc(this.x + 10, this.y + 10, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.font = '12px Arial'; ctx.fillText('?', this.x + 7, this.y + 15);
+    },
+    update: function() {
+        if (!this.active) return;
+        this.x -= (3 * (gameSpeed / 3)); 
+        if (bird.x < this.x + this.width && bird.x + bird.width > this.x && bird.y < this.y + this.height && bird.y + bird.height > this.y) {
+            toggleGravityInvert();
+            scoreBoard.innerText = score;
+            if (score > 0 && score % 10 === 0) activateSlowMotion();
+            this.active = false; this.x = -100;
+        }
+        if (this.x + this.width < 0) this.active = false;
+    }
+};
+
+
+
 function loop() {
     if (!isPlaying) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -87,5 +114,6 @@ function loop() {
 window.addEventListener('keydown', function(e) { if (e.code === 'Space') { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); } });
 canvas.addEventListener('click', function() { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); });
 restartBtn.addEventListener('click', resetGame);
+
 
 
