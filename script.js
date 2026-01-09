@@ -115,6 +115,10 @@ function showFloatingText(text, x, y) {
     setTimeout(() => el.remove(), 1000);
 }
 
+function activateSlowMotion() {
+    gameSpeed = 1.5; document.body.style.filter = "hue-rotate(90deg)";
+    setTimeout(() => { gameSpeed = 3; document.body.style.filter = "none"; }, 3000);
+}
 
 function toggleGravityInvert() {
     isGravityInverted = !isGravityInverted; bird.velocity = 0;
@@ -142,6 +146,7 @@ function loop() {
 window.addEventListener('keydown', function(e) { if (e.code === 'Space') { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); } });
 canvas.addEventListener('click', function() { if (!isPlaying && !isGameOver) resetGame(); else if (isPlaying) bird.flap(); });
 restartBtn.addEventListener('click', resetGame);
+
 
 
 
