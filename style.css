@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+body {
+  background-color: #0d0d0d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+.game-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 800px;
+  background: linear-gradient(to bottom, #1a1a2e, #16213e);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ui-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  width: 100%;
+}
+h1 {
+  font-size: 2.5rem;
+  color: #0ff;
+  text-shadow: 2px 2px #f0f;
+  margin-bottom: 10px;
+}
+h2 {
+  font-size: 2rem;
+  color: #f00;
+  text-shadow: 2px 2px #fff;
+}
+.instruction {
+  font-size: 1.2rem;
+  animation: blink 1s infinite;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background: transparent;
+  border: 2px solid #0ff;
+  color: #0ff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #0ff;
+  color: #000;
+}
+#scoreBoard {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  z-index: 10;
+}
+#statusIndicator {
+  position: absolute;
+  bottom: 20%;
+  width: 100%;
+  text-align: center;
+  color: #f0f;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px #f0f;
+}
+.hidden {
+  display: none !important;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
